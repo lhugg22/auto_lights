@@ -21,29 +21,9 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
-int state_var;
-//int held;
-//bool once;
-//bool once0;
-//int upper_lim = 300;
-//int lower_lim = 10;
-
+int state_var,alt;
 long duration, cm;
-int alt;
 bool lights_on, changed;
-
-// Fill strip pixels one after another with a color. Strip is NOT cleared
-// first; anything there will be covered pixel by pixel. Pass in color
-// (as a single 'packed' 32-bit value, which you can get by calling
-// strip.Color(red, green, blue) as shown in the loop() function above),
-// and a delay time (in milliseconds) between pixels.
-void colorWipe(uint32_t color, int wait) {
-  for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
-    strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
-    strip.show();                          //  Update strip to match
-    delay(wait);                           //  Pause for a moment
-  }
-}
 
 void setup() {
   // put your setup code here, to run once:
@@ -51,7 +31,8 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
-  Serial.begin (9600);
+//------Removed-Don't-need-to-troubleshoot--------
+//  Serial.begin (9600);
 
   alt = 0;
   lights_on = 0;
@@ -84,8 +65,10 @@ void loop() {
   pinMode(echoPin, INPUT);
   duration = pulseIn(echoPin, HIGH);
 
-  Serial.println(lights_on);
-  Serial.println(cm);
+//------Removed-Don't-need-to-troubleshoot--------
+//  Serial.println(lights_on);
+//  Serial.println(cm);
+
   // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
 
@@ -105,7 +88,7 @@ void loop() {
 
   
   if(lights_on and not changed){
-    colorWipe(strip.Color(0, 250, 0), 0); //red
+    colorWipe(strip.Color(0, 0, 250), 0); //green? rgb(255,105,180)
     changed = lights_on;
   } else if( not lights_on and changed){
     colorWipe(strip.Color(0, 0, 0), 0);   //off
@@ -114,4 +97,27 @@ void loop() {
 
   
   delay(50);
+}
+
+//-------------------------FUNCTIONS!----------------------------------------
+
+// Fill strip pixels one after another with a color. Strip is NOT cleared
+// first; anything there will be covered pixel by pixel. Pass in color
+// (as a single 'packed' 32-bit value, which you can get by calling
+// strip.Color(red, green, blue) as shown in the loop() function above),
+// and a delay time (in milliseconds) between pixels.
+//(GREEN, RED, BLUE) is the Color coding for the uint32_t for some reason
+void colorWipe(uint32_t color, int wait) {
+  for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+    strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
+    strip.show();                          //  Update strip to match
+    delay(wait);                           //  Pause for a moment
+  }
+}
+
+void sexyColors(){
+  for(int i=0; i<strip.numPixels(); i=i+2){
+    strip.setPixelColor(i, strip.Color(105, 255, 180));
+  }
+  strip.show();
 }

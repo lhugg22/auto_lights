@@ -20,4 +20,9 @@ Issues:
 	I got the sensor to work at a scan rate of 50ms. I may go back and change this later but ITS WORKING!
 	This will work to show all of the colors Red (which isn't folling the (R, G, B) format that I thought it should
 		(this might be in an English format of (G, R, B)? will do some testing)
-	
+
+1.1 changed color
+	I changed the color and cleaned up the code a bit to get rid of the serial prints and extra code that wasn't needed
+	I currently have left the color projection as blue. this can be changed easily by adjusting the color code of the GRB (green, red, blue)
+	I am working on a function for changing the color just to make the code more streamlined
+	very excited to mount this. next step is to start working on my wifi weight scale!
