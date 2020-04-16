@@ -30,7 +30,7 @@ int state_var;
 
 long duration, cm;
 int alt;
-bool lights_on;
+bool lights_on, changed;
 
 // Fill strip pixels one after another with a color. Strip is NOT cleared
 // first; anything there will be covered pixel by pixel. Pass in color
@@ -55,10 +55,11 @@ void setup() {
 
   alt = 0;
   lights_on = 0;
+  changed = 0;
 
-//  strip.begin();            // INITIALIZE NeoPixel strip object (REQUIRED)
-//  strip.show();             // Turn OFF all pixels ASAP
-//  strip.setBrightness(50);  // Set BRIGHTNESS to about 1/5 (max = 255)
+  strip.begin();            // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();             // Turn OFF all pixels ASAP
+  strip.setBrightness(50);  // Set BRIGHTNESS to about 1/5 (max = 255)
 
   state_var = 0;
 
@@ -102,8 +103,13 @@ void loop() {
     lights_on = 0;
   }
 
-  if(lights_on){
-    
+  
+  if(lights_on and not changed){
+    colorWipe(strip.Color(0, 250, 0), 0); //red
+    changed = lights_on;
+  } else if( not lights_on and changed){
+    colorWipe(strip.Color(0, 0, 0), 0);   //off
+    changed = lights_on;
   }
 
   

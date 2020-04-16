@@ -15,3 +15,9 @@ Issues:
 	Plan: if lights_on is on do a colorWipe from the other .h file to wipe the colors.
 		-I think I will turn off the serial for this. it will be obvious if its working right
 		-if it isn't working, I will add the serial back for trouble shooting
+
+1.0 Working w/ Lights!
+	I got the sensor to work at a scan rate of 50ms. I may go back and change this later but ITS WORKING!
+	This will work to show all of the colors Red (which isn't folling the (R, G, B) format that I thought it should
+		(this might be in an English format of (G, R, B)? will do some testing)
+	
