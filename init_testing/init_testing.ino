@@ -29,6 +29,8 @@ int state_var;
 //int lower_lim = 10;
 
 long duration, cm;
+int alt;
+bool lights_on;
 
 // Fill strip pixels one after another with a color. Strip is NOT cleared
 // first; anything there will be covered pixel by pixel. Pass in color
@@ -51,15 +53,14 @@ void setup() {
 
   Serial.begin (9600);
 
+  alt = 0;
+  lights_on = 0;
 
 //  strip.begin();            // INITIALIZE NeoPixel strip object (REQUIRED)
 //  strip.show();             // Turn OFF all pixels ASAP
 //  strip.setBrightness(50);  // Set BRIGHTNESS to about 1/5 (max = 255)
 
   state_var = 0;
-//  held = 0;
-//  once = false;
-//  once0 = false;
 
 }
 
@@ -82,79 +83,29 @@ void loop() {
   pinMode(echoPin, INPUT);
   duration = pulseIn(echoPin, HIGH);
 
- 
+  Serial.println(lights_on);
+  Serial.println(cm);
   // Convert the time into a distance
   cm = (duration/2) / 29.1;     // Divide by 29.1 or multiply by 0.0343
 
-  Serial.println(cm);
-  delay(1000);
-
-  if(cm < 20){
+  if(cm < 20 and state_var == 0){
     state_var = 1;
+    alt++;
   }
   else if(cm > 100) {
     state_var = 0;
   }
 
-  Serial.println(state_var);
-  if( state_var = 1){
-    colorWipe(strip.Color(250, 0, 0), 10);
-  }
-  else if( state_var = 0){
-    colorWipe(strip.Color(0,0,0), 100);
+  if(alt%2){
+    lights_on = 1;
+  } else {
+    lights_on = 0;
   }
 
-
-
-
-//------------Changing States-----------------
-
-/*
-//if cm is greater than Upper Limit then reset ONS
-  if(cm >= upper_lim) {
-    once = false;
+  if(lights_on){
+    
   }
 
-//if cm is lower than Lower Limit
-  if(cm <= lower_lim && once==false) {
-    state_var++;
-    once = true;
-  }
-
-  if(once){
-    held++;
-  }
-
-//Start of State Machine
-//--------------State 0------------------------
-   if (state_var == 0) {
-//    colorWipe(strip.Color(0,   0,   0), 10); //Turn OFF all pixels
-   }//--------------State 1------------------------
-   else if (state_var == 1) {
-//    colorWipe(strip.Color(250, 0, 0), 10); //red
-   }//--------------State 2------------------------
-   else if (state_var == 2) {
-//    colorWipe(strip.Color(0, 250, 0), 10); //green
-   }//--------------Catch All-------------------- (hopefully doesn't get stuck unbounded)
-   else {
-    state_var = 0;
-   }
-
-//   strip.show(); 
-
-   Serial.println("state var" + state_var);
-   */
+  
+  delay(50);
 }
-
-//void example_function (int wait){
-//  uint32_t color;
-//  delay(wait);
-//}
-
-//long microsecondsToInches(long microseconds) {
-//   return microseconds / 74 / 2;
-//}
-//
-//long microsecondsToCentimeters(long microseconds) {
-//   return microseconds / 29 / 2;
-//}
