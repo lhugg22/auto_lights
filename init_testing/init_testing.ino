@@ -31,8 +31,7 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
-//------Removed-Don't-need-to-troubleshoot--------
-//  Serial.begin (9600);
+//  Serial.begin(9600);
 
   alt = 0;
   lights_on = 0;
@@ -86,9 +85,11 @@ void loop() {
     lights_on = 0;
   }
 
+randSpookyColors();
+
   
   if(lights_on and not changed){
-    colorWipe(strip.Color(0, 0, 250), 0); //green? rgb(255,105,180)
+//    colorWipe(strip.Color(165, 255, 25), 0); //green? rgb(255,105,180)
     changed = lights_on;
   } else if( not lights_on and changed){
     colorWipe(strip.Color(0, 0, 0), 0);   //off
@@ -113,6 +114,21 @@ void colorWipe(uint32_t color, int wait) {
     strip.show();                          //  Update strip to match
     delay(wait);                           //  Pause for a moment
   }
+}
+
+void randSpookyColors(){
+  int tmWait = 10*rand();
+  int pix = strip.numPixels()*rand();
+  int rd =  255;
+  int grn = round(255*rand());
+  int blue = round(255*rand());
+//  delay(tmWait);
+  strip.setPixelColor(pix, strip.Color(grn, rd, blue));
+//  Serial.print("led #:" + pix);
+//  Serial.print(" grn:" + grn);
+//  Serial.print(" red:" + rd);
+//  Serial.print(" blue:" + blue);
+  strip.show();
 }
 
 void sexyColors(){

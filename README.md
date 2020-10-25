@@ -26,3 +26,5 @@ Issues:
 	I currently have left the color projection as blue. this can be changed easily by adjusting the color code of the GRB (green, red, blue)
 	I am working on a function for changing the color just to make the code more streamlined
 	very excited to mount this. next step is to start working on my wifi weight scale!
+
+
