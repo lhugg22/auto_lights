@@ -120,8 +120,8 @@ void randSpookyColors(){
   int tmWait = 10*rand();
   int pix = strip.numPixels()*rand();
   int rd =  255;
-  int grn = round(255*rand());
-  int blue = round(255*rand());
+  int grn = round(160*rand());
+  int blue = round(40*rand());
 //  delay(tmWait);
   strip.setPixelColor(pix, strip.Color(grn, rd, blue));
 //  Serial.print("led #:" + pix);
